@@ -1,19 +1,25 @@
 //CREATED JS BY RAHUL MISHRA
 let conn;
-
+var fps = 0;
+let main = document.getElementsByClassName("main")[0];
 function config(ip,port){
    var s = 'ws://'+ip+':'+port;
+    //s = "ws://localhost:5000";
     console.log(s);
    conn = new WebSocket(s); 
     conn.onopen = (e)=>{
+    main.style.display = "none";
     u_status("Connected");
 }
 conn.onclose = (e)=>{
+   main.style.display = "flex";
     u_status("Disconnected");
 }
 conn.onmessage = (e)=>{
-    if(e.data instanceof Blob)
-        img(e.data);
+    if(e.data instanceof Blob){
+       img(URL.createObjectURL(e.data));
+     delete e.data;
+    }
     else{
      var s = document.createElement("span");
      cb.appendChild(s);
@@ -46,8 +52,23 @@ cbbut.onclick = ()=>{
     (c)?cb.style.display="none":cb.style.display="flex";
     c = !c;
 }
-function img(data){
-    document.getElementById("imgs").src=URL.createObjectURL(data);
-    delete data;
-    
+var buffer = [];
+function img(str){
+     if(buffer.length >= 60)
+    {
+         buffer.forEach((e)=>{
+          URL.revokeObjectURL(e);
+        });
+       buffer.length = 0;
+    }
+    document.getElementById("imgs").src = str;
+    fps++;
+    buffer.push(str);
+   
+}
+setInterval(showfps,1000);
+function showfps()
+{
+    document.getElementById("fps").innerHTML = fps;
+    fps = 0;
 }

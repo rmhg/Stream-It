@@ -92,3 +92,11 @@ body
     position: relative;
     top:90%;
 }
+
+#fps {
+    position: absolute;
+    top:0%;
+    right: 0%;
+    color: black;
+    background: rgba(255,255,255,0.6);
+}
