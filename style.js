@@ -11,6 +11,9 @@ function config(ip,port){
     main.style.display = "none";
     u_status("Connected");
 }
+conn.onerror = (e)=>{
+console.log(e);
+}
 conn.onclose = (e)=>{
    main.style.display = "flex";
     u_status("Disconnected");
