@@ -3,7 +3,7 @@ let conn;
 var fps = 0;
 let main = document.getElementsByClassName("main")[0];
 function config(ip,port){
-   var s = 'ws://'+ip+':'+port;
+   var s = 'wss://'+ip+':'+port;
     //s = "ws://localhost:5000";
     console.log(s);
    conn = new WebSocket(s); 
